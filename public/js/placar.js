@@ -8,18 +8,17 @@ function inserePlacar(){
         linha.find(".botao-remover").click(removeLinha);
     corpoTabela.prepend(linha);
 
-    $(".placar").slideToggle(500);
+    $(".placar").slideDown(500);
     scrollPlacar();
 }
 function scrollPlacar(){
 
-    var posicaoPlacar = (".placar").offset().Top;
-
-    ("body").animate(
-    {
-       scrollTop: posicaoPlacar + "px"     
-
-    }, 1000)
+    var posicaoPlacar = $(".placar").offset().top;
+    console.log(posicaoPlacar+"px")
+    $("HTML ,body").animate(
+        {
+            scrollTop: posicaoPlacar+"px"
+        }, 1000);
 }
 
 function novaLinha(Usuario, numPalavras){
