@@ -13,6 +13,12 @@ $(document).ready(function(){
     $("#botao-reiniciar").click(reiniciaJogo);
 });
 //---------------------------------------------------------------------------------------------------
+function atualizaTempoInicial(tempo){
+    tempoInicial = tempo;
+    $("#tempo-digitacao").text(tempo);
+
+}
+
 function atualizaTamanhoFrase(){ // determina os números principais da partida
     var frase = $(".frase").text();
     var numPalavras = frase.split(" ").length;
@@ -22,7 +28,7 @@ function atualizaTamanhoFrase(){ // determina os números principais da partida
 
 function inicializaContadores(){
     campo.on("input", function(){ //Evento input
-        
+        var frase = $(".frase").text();
         conteudo = campo.val();
         var qtdPalavras = conteudo.split(/\S+/).length -1; //expressão regular que busca por qualquer espaço vazio;
         
@@ -34,9 +40,10 @@ function inicializaContadores(){
 }
 
 function inicializaCronometro(){
-    var tempoRestante = $("#tempo-digitacao").text();
+    
     campo.one("focus", function(){ // funcao one só executa o evento uma única vez
-       var cronometroID = setInterval(function(){ //set Interval recebe dois paramaetros, a function e o tempo;
+        var tempoRestante = $("#tempo-digitacao").text();
+        var cronometroID = setInterval(function(){ //set Interval recebe dois paramaetros, a function e o tempo;
             tempoRestante --;                     // todo set interval retorna o próprio Id;      
             $("#tempo-digitacao").text(tempoRestante);
             if(tempoRestante < 1){
@@ -47,19 +54,20 @@ function inicializaCronometro(){
     });
 }
 function inicializaMarcadores(){
-var frase = $(".frase").text();
-campo.on("input", function(){
-   
-    var digitado = campo.val(); // valor
-    var comparavel = frase.substr(0, digitado.length); // variável que guarda o conteúdo da frase principal de acordo com o que foi digitado até o momento
+    campo.on("input", function(){
+        
+        var frase = $(".frase").text();
+        var digitado = campo.val(); // valor
+        var comparavel = frase.substr(0, digitado.length); // variável que guarda o conteúdo da frase principal de acordo com o que foi digitado até o momento
 
-    //alterna a cor do campo de digitação
-    if(digitado == comparavel){
-        campo.addClass("borda-verde"); 
-        campo.removeClass("borda-vermelha");
-    }else{
-        campo.addClass("borda-vermelha");
-        campo.removeClass("borda-verde");
+        //alterna a cor do campo de digitação
+        if(digitado == comparavel){
+            console.log("indo bem!")
+            campo.addClass("borda-verde"); 
+            campo.removeClass("borda-vermelha");
+        }else{
+            campo.addClass("borda-vermelha");
+            campo.removeClass("borda-verde");
     }
 });
 }

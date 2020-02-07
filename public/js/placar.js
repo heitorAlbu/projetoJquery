@@ -15,10 +15,7 @@ function scrollPlacar(){
 
     var posicaoPlacar = $(".placar").offset().top;
     console.log(posicaoPlacar+"px")
-    $("HTML ,body").animate(
-        {
-            scrollTop: posicaoPlacar+"px"
-        }, 1000);
+    $("html").animate({ scrollTop: posicaoPlacar+"px"}, 1000); //ainda falta corrigir
 }
 
 function novaLinha(Usuario, numPalavras){
