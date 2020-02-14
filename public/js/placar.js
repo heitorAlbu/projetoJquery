@@ -1,3 +1,6 @@
+$("#botao-placar").click(mostrarPlacar);
+$("#botao-sync").click(sincronizaPlacar);
+
 function inserePlacar(){
     var corpoTabela = $(".placar").find("tbody");
     var Usuario = "Heitor";
@@ -12,10 +15,11 @@ function inserePlacar(){
     scrollPlacar();
 }
 function scrollPlacar(){
-
     var posicaoPlacar = $(".placar").offset().top;
     console.log(posicaoPlacar+"px")
     $("html").animate({ scrollTop: posicaoPlacar+"px"}, 1000); //ainda falta corrigir
+
+    sincronizaPlacar();
 }
 
 function novaLinha(Usuario, numPalavras){
@@ -51,8 +55,56 @@ function removeLinha(){
     });   
 }
 
-$("#botao-placar").click(mostrarPlacar);
+//$("#botao-placar").click(mostrarPlacar);
 
 function mostrarPlacar(){
     $(".placar").stop().slideToggle(600);
 }
+
+function sincronizaPlacar(){
+  
+    var placar = [];
+    var linhas = $("tbody>tr");
+    
+    linhas.each(function(){
+        var usuario = $(this).find("td:nth-child(1)").text();
+        var palavras = $(this).find("td:nth-child(2)").text();
+
+        var score = {
+            usuario: usuario,
+            pontos: palavras            
+        };
+
+        placar.push(score);
+
+    });
+
+    var dados = {
+        placar: placar
+    };
+
+    $.post("http://localhost:3000/placar", dados, function(){
+        console.log("placar salvo no servidor!!");
+    });
+ }
+
+ function atualizaPlacar(){
+    $.get("http://localhost:3000/placar", function(data){
+        
+        $(data).each(function(){
+            console.log("jsdfjhsjfdfh");
+            var linha = novaLinha(this.usuario, this.pontos);
+            linha.find(".botao-remover").click(removeLinha); //adiciona o evento de click no botão remover ao criar uma nova linha
+                $("tbody").append(linha);
+        })
+    });
+
+ }
+
+
+
+
+
+
+
+

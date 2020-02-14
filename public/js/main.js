@@ -9,8 +9,12 @@ $(document).ready(function(){
     inicializaContadores();
     inicializaCronometro();
     inicializaMarcadores();
-    inserePlacar();
+    
     $("#botao-reiniciar").click(reiniciaJogo);
+    atualizaPlacar();
+
+
+
 });
 //---------------------------------------------------------------------------------------------------
 function atualizaTempoInicial(tempo){
@@ -83,11 +87,6 @@ function reiniciaJogo(){
     campo.removeClass("borda-verde");
     campo.removeClass("borda-vermelha");
 }
-
-
-
-
-
 
 function finalizaJogo(){
     campo.attr("disabled", true);
