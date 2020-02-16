@@ -47,13 +47,9 @@ function buscaFrase(){
 }
 
 function trocaFrase(data){
-        console.log(data);
-
         var frase = $(".frase");
         frase.text(data.texto);
         atualizaTamanhoFrase();
         atualizaTempoInicial(data.tempo);
-        
-
 }
 

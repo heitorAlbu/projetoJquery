@@ -3,7 +3,7 @@ $("#botao-sync").click(sincronizaPlacar);
 
 function inserePlacar(){
     var corpoTabela = $(".placar").find("tbody");
-    var Usuario = "Heitor";
+    var Usuario = $("#usuarios").val();
     var numPalavras = $("#contador-palavras").text(); 
     var botaoRemover = "<a href='#'><i class='small material-icons'>delete</i></a>"
     
@@ -85,6 +85,15 @@ function sincronizaPlacar(){
 
     $.post("http://localhost:3000/placar", dados, function(){
         console.log("placar salvo no servidor!!");
+        $(".tooltip").tooltipster("open");
+
+    }).fail(function(){
+        $(".tooltip").tooltipster("open").tooltipster("content", "Falha ao sincronizar");
+        
+    }).always(function(){
+        setTimeout(function(){
+            $(".tooltip").tooltipster("close");
+        }, 2500);
     });
  }
 
@@ -92,7 +101,7 @@ function sincronizaPlacar(){
     $.get("http://localhost:3000/placar", function(data){
         
         $(data).each(function(){
-            console.log("jsdfjhsjfdfh");
+    
             var linha = novaLinha(this.usuario, this.pontos);
             linha.find(".botao-remover").click(removeLinha); //adiciona o evento de click no botão remover ao criar uma nova linha
                 $("tbody").append(linha);
